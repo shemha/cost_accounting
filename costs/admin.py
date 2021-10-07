@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Vender, Material, Product, Cost, Warehousing, Stock, Client, Sale
+from .models import Vender, Material, Product, Cost, Warehousing, Stock, Customer, Orderer, Sale
 
 # Register your models here.
 class VenderAdmin(admin.ModelAdmin):
@@ -30,9 +30,13 @@ class StockAdmin(admin.ModelAdmin):
     list_display = ('id', 'warehousing',)
     list_display_links = ('id',)
 
-class ClientAdmin(admin.ModelAdmin):
+class CustomerAdmin(admin.ModelAdmin):
+    list_display = ('id', 'company',)
+    list_display_links = ('id', 'company',)
+
+class OrdererAdmin(admin.ModelAdmin):
     list_display = ('id', 'company', 'name',)
-    list_display_links = ('id', 'name',)
+    list_display_links = ('id', 'company', 'name',)
 
 class SaleAdmin(admin.ModelAdmin):
     list_display = ('id', 'client', 'order_date',)
@@ -45,5 +49,6 @@ admin.site.register(Product, ProductAdmin)
 admin.site.register(Cost, CostAdmin)
 admin.site.register(Warehousing, WarehousingAdmin)
 admin.site.register(Stock, StockAdmin)
-admin.site.register(Client, ClientAdmin)
+admin.site.register(Customer, CustomerAdmin)
+admin.site.register(Orderer, OrdererAdmin)
 admin.site.register(Sale, SaleAdmin)

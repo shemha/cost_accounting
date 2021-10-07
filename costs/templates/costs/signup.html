@@ -1,19 +1,29 @@
 {% extends 'costs/base.html' %}
 {% block content %}
-    <h2>ユーザー登録</h2>
     <form method="POST" action="{% url 'costs:signup' %}">{% csrf_token %}
-        <label>メールアドレス</label>
-        {{ form.email }}
-        {{ form.email.errors }}
-        <br>
-        <label>パスワード</label>
-        {{ form.password1 }}
-        {{ form.password1.errors }}
-        <br>
-        <label>パスワード(確認)</label>
-        {{ form.password2 }}
-        {{ form.password2.errors }}
-        <br>
-        <input type="submit" value="登録する">
+        <div id="form">
+            <div class="form-item">
+                <h2>ユーザー登録</h2>
+            </div>
+            <div class="form-item">
+                <label class="formLabel">メールアドレス</label>
+                {{ form.email }}
+                {{ form.email.errors }}
+            </div>
+            <div class="form-item">
+                <label class="formLabel">パスワード</label>
+                {{ form.password1 }}
+                {{ form.password1.errors }}
+            </div>
+            <div class="form-item">
+                <label class="formLabel">パスワード(確認)</label>
+                {{ form.password2 }}
+                {{ form.password2.errors }}
+            </div>
+            <div class="form-item">
+                <input type="submit" class="login pull-right" value="登録する">
+                <div class="clear-fix"></div>
+            </div>
+        </div>
     </form>
 {% endblock %}

@@ -137,3 +137,10 @@ LOGOUT_REDIRECT_URL = 'costs:index'
 # 画像データ保存
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+NUMBER_GROUPING = 3
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)

@@ -107,8 +107,9 @@ class Cost(models.Model):
 
 class Warehousing(models.Model):
     """入庫マスタ"""
+    material = models.ForeignKey(Material, on_delete=models.PROTECT)
     cost = models.ForeignKey(Cost, on_delete=models.PROTECT)
-    date = models.DateTimeField('入庫日', auto_now=True)
+    date = models.DateField('入庫日')
     quantity = models.FloatField('入庫量', validators=[MinValueValidator(0)], default=0)
     unit = models.FloatField('単価', validators=[MinValueValidator(0)], default=0)
 
@@ -123,10 +124,9 @@ class Stock(models.Model):
         return self.warehousing
 
 
-class Client(models.Model):
-    """顧客マスタ"""
+class Customer(models.Model):
+    """得意先マスタ"""
     company = models.CharField('会社名', max_length=100)
-    name = models.CharField('担当者名', max_length=50)
     post = models.CharField(
         '郵便番号',
         max_length=7,
@@ -176,12 +176,43 @@ class Client(models.Model):
     note = models.TextField('備考', blank=True)
 
     def __str__(self):
-        return self.name
+        return self.company
+
+
+class Orderer(models.Model):
+    """発注者マスタ"""
+    company = models.ForeignKey(Customer, on_delete=models.PROTECT)
+    name = models.CharField('担当者名', max_length=50)
+    tel = models.CharField(
+        '電話番号',
+        blank=True,
+        max_length=10,
+        validators=[
+            MinLengthValidator(10),
+            RegexValidator(
+                regex="^[0-9]+$",
+                message="10桁の数字を入力してください。"
+            )
+        ]
+    )
+    email = models.EmailField(
+        'メールアドレス',
+        blank=True,
+        validators=[
+            RegexValidator(
+                regex="^[a-zA-Z0-9_+-]+(.[a-zA-Z0-9_+-]+)*@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$",
+                message="無効な文字列が入っています。"
+            )
+        ]
+    )
+
+    def __str__(self):
+        return self.company, self.name
 
 
 class Sale(models.Model):
     """販売テーブル"""
-    client = models.ForeignKey(Client, on_delete=models.PROTECT)
+    client = models.ForeignKey(Customer, on_delete=models.PROTECT)
     order_date = models.DateTimeField('注文日', auto_now=True)
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     order_amount = models.PositiveIntegerField("注文数", default=0)

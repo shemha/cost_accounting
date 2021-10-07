@@ -1,11 +1,14 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import authenticate, login
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, WarehousingForm
+from .models import Product, Vender
 
 
 # Create your views here.
 def index(request):
-    return render(request, 'costs/index.html')
+    form = WarehousingForm()
+    context = {'form': form,}
+    return render(request, 'costs/index.html', context)
 
 
 def signup(request):
@@ -25,3 +28,10 @@ def signup(request):
     else:
         form = CustomUserCreationForm()
         return render(request, 'costs/signup.html', {'form': form})
+
+
+def detail(request, product_id, vender_id):
+    product = get_object_or_404(Product, pk=product_id)
+    vender = get_object_or_404(Vender, pk=vender_id)
+    context = {'product': product, 'vender': vender}
+    return render(request, 'costs/detail.html', context)

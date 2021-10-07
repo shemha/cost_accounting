@@ -1,16 +1,26 @@
 {% extends 'costs/base.html' %}
 {% block content %}
     <form class="form-signin" method="POST">{% csrf_token %}
-        {% if form.errors %}
-            <p>“ユーザー名”または“パスワード”が間違っています。再度ご確認ください。</p>
-        {% endif %}
-        <h2>ログイン</h2>
-        <label>メールアドレス</label>
-        <input name="username">
-        <br>
-        <label>パスワード</label>
-        <input type="password" name="password">
-        <br>
-        <input type="submit" value="ログイン">
+        <div id="form">
+            <div class="form-item">
+                {% if form.errors %}
+                    <p>“ユーザー名”または“パスワード”が間違っています。再度ご確認ください。</p>
+                {% endif %}
+                <h2>ログイン</h2>
+            </div>
+            <div class="form-item">
+                <label class="formLabel">メールアドレス</label>
+                <input type="email" name="username" id="email" class="form-style" autocomplete="off"/>
+            </div>
+            <div class="form-item">
+                <label class="formLabel">パスワード</label>
+                <input type="password" name="password" id="password" class="form-style" />
+            </div>
+            <div class="form-item">
+                <input type="submit" class="login pull-right" value="ログイン">
+                <div class="clear-fix"></div>
+            </div>
+        </div>
     </form>
 {% endblock %}
+
