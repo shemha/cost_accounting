@@ -1,15 +1,47 @@
-from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm
-from django.forms import ModelForm
-from .models import Warehousing
+from django.forms import ModelForm, modelformset_factory
+from .models import *
 
-
-class CustomUserCreationForm(UserCreationForm):
-    class Meta:
-        model = get_user_model()
-        fields = ('email',)
 
 class WarehousingForm(ModelForm):
     class Meta:
         model = Warehousing
-        fields = ['material', 'quantity', 'unit', 'date']
+        fields = ['material', 'quantity', 'price', 'date']
+
+class CostForm(ModelForm):
+    class Meta:
+        model = Cost
+        fields = [
+            'product', 
+            'product_amount',
+            'material', 
+            'material_amount',
+            'work_in_process', 
+            'defective', 
+            'term_begin', 
+            'term_end', 
+            'cost_note',
+        ]
+
+
+class OrdererForm(ModelForm):
+    model = Orderer
+    fields = [
+            'name',
+            'tel',
+            'email',
+            'note',
+        ]
+
+
+class CustomerForm(ModelForm):
+    class Meta:
+        model = Customer
+        fields = [
+            'company',
+            'post',
+            'address',
+            'tel',
+            'fax',
+            'email',
+            'note',
+        ]

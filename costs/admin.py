@@ -1,30 +1,39 @@
 from django.contrib import admin
-from .models import Vender, Material, Product, Cost, Warehousing, Stock, Customer, Orderer, Sale
+from .models import *
 
 # Register your models here.
 class VenderAdmin(admin.ModelAdmin):
     list_display = ('id', 'company', 'name',)
-    list_display_links = ('id', 'name',)
+    list_display_links = ('id', 'company', 'name',)
+
 
 class MaterialAdmin(admin.ModelAdmin):
-    list_display = ('id','name', 'division',)
+    list_display = ('id', 'name', 'vender',)
     list_display_links = ('id', 'name',)
 
+    def vender_company(self, obj):
+        return obj.vender.company
+    vender_company.short_description = '仕入先'
+    vender_company.admin_order_field = 'vender'
+
+
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title',)
-    list_display_links = ('id', 'title',)
+    list_display = ('id', 'name',)
+    list_display_links = ('id', 'name',)
+
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('id', 'name',)
     list_display_links = ('id', 'name',)
+
 
 class CostAdmin(admin.ModelAdmin):
     list_display = ('id', 'product',)
     list_display_links = ('id',)
 
 class WarehousingAdmin(admin.ModelAdmin):
-    list_display = ('id', 'cost', 'date',)
-    list_display_links = ('id', 'date',)
+    list_display = ('id', 'material', 'date',)
+    list_display_links = ('id', 'material', 'date',)
 
 class StockAdmin(admin.ModelAdmin):
     list_display = ('id', 'warehousing',)
@@ -39,12 +48,13 @@ class OrdererAdmin(admin.ModelAdmin):
     list_display_links = ('id', 'company', 'name',)
 
 class SaleAdmin(admin.ModelAdmin):
-    list_display = ('id', 'client', 'order_date',)
-    list_display_links = ('id', 'client', 'order_date',)
+    list_display = ('id', 'customer', 'order_date',)
+    list_display_links = ('id', 'customer', 'order_date',)
 
 
 admin.site.register(Vender, VenderAdmin)
 admin.site.register(Material, MaterialAdmin)
+admin.site.register(Category, CategoryAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Cost, CostAdmin)
 admin.site.register(Warehousing, WarehousingAdmin)

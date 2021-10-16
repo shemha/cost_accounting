@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_bootstrap5',
+    'pygments_renderer',
+    'widget_tweaks',
     'users',
     'costs',
 ]
@@ -131,8 +134,8 @@ AUTH_USER_MODEL = 'users.User'
 
 # ログイン・ログアウト
 LOGIN_URL = 'costs:login'
-LOGIN_REDIRECT_URL = 'costs:index'
-LOGOUT_REDIRECT_URL = 'costs:index'
+LOGIN_REDIRECT_URL = 'costs:warehousing'
+LOGOUT_REDIRECT_URL = 'costs:login'
 
 # 画像データ保存
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

@@ -1,12 +1,7 @@
-# venv/lib/python3.8/site-packages/django/contrib/adminディレクトリ
 from django.contrib import admin
-# venv/lib/python3.8/site-packages/django/contrib/auth/admin.pyの'UserAdmin'クラス
 from django.contrib.auth.admin import UserAdmin
-# venv/lib/python3.8/site-packages/django/contrib/auth/forms.pyの'UserChangeForm'クラス, 'UserCreationForm'クラス
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
-# venv/lib/python3.8/site-packages/django/utils/tanslation/__init__.pyの'ugettext_lazy'クラス
 from django.utils.translation import ugettext_lazy as _
-# users/models.pyのUserクラス
 from .models import User
 
 # Register your models here.

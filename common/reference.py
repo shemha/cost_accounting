@@ -2,17 +2,17 @@ from django.db import models
 
 class Division(models.TextChoices):
     """材料区分"""
-    feed = 'F', '原材料'
-    part = 'P', '部品'
-    secondary = 'S', '補助資材'
-    another = 'X', 'その他'
+    feed = 'FD', '原材料'
+    part = 'PT', '部品'
+    secondary = 'SD', '補助資材'
+    another = 'XX', 'その他'
 
 
-class Shipping(models.TextChoices):
-    hand = 'H', '手渡し'
-    delivery = 'D', '配送'
-    carry = 'C', '搬入'
-    another = 'X', 'その他'
+class Delivering(models.TextChoices):
+    hand = 'HD', '手渡し'
+    delivery = 'DV', '配送'
+    carry = 'CR', '搬入'
+    another = 'XX', 'その他'
 
 
 class Unit(models.TextChoices):
@@ -22,7 +22,9 @@ class Unit(models.TextChoices):
     meter = 'MT', 'メートル'
     milliliter = 'ML', 'ミリリットル'
     liter = 'LT', 'リットル'
-    quantity = 'QT', '個数'
+    quantity = 'QT', '個'
+    sheets = 'ST', '枚'
+    number = 'NU', '本'
 
 
 class Settlement(models.TextChoices):

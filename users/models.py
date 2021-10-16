@@ -1,12 +1,7 @@
-# venv/lib/python3.8/site-packages/django/db/modelsディレクトリ
 from django.db import models
-# venv/lib/python3.8/site-packages/django/contrib/auth/models.pyの'PermissionsMixin'クラス
 from django.contrib.auth.models import PermissionsMixin
-# venv/lib/python3.8/site-packages/django/contrib/auth/base_user.pyの'AbstractBaseUser'クラス
 from django.contrib.auth.base_user import AbstractBaseUser
-# venv/lib/python3.8/site-packages/django/utils/timezone.pyファイル
 from django.utils import timezone
-# venv/lib/python3.8/site-packages/django/contrib/auth/base_user.pyの'BaseUserManager'クラス
 from django.contrib.auth.base_user import BaseUserManager
 
 # Create your models here.
