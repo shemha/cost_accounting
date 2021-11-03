@@ -45,3 +45,20 @@ class CustomerForm(ModelForm):
             'email',
             'note',
         ]
+
+
+class SaleForm(ModelForm):
+    class Meta:
+        model = Sale
+        fields = [
+                'customer',
+                'order_date',
+                'product',
+                'settlement',
+                'total_price',
+                'sales_tax',
+                'commission',
+                'how_to_give',
+                'giving_date',
+                'note',
+            ]

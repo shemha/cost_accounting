@@ -4,11 +4,14 @@ from users.forms import CustomUserCreationForm
 from .forms import *
 from .models import *
 from django.views.generic import ListView, View
-from django.forms.models import modelformset_factory
-from django.db import transaction
 
 
 # Create your views here.
+# def base_branch(request, pk):
+#     user = get_object_or_404(User, pk=pk)
+#     return render(request, 'app/base.html', {'user': user})
+
+
 def signup(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -46,11 +49,6 @@ def warehousing_views(request, filter):
     return render(request, 'costs/warehousing_views.html', context)
 
 
-# def cost_accounting(request):
-#     form = CostForm()
-#     context = {'form': form,}
-#     return render(request, 'costs/cost_accounting.html', context)
-
 def cost_accounting(request):
     if request.method == "POST":
         form = CostForm(request.POST)
@@ -60,7 +58,7 @@ def cost_accounting(request):
     else:
         form = CostForm(request.POST)
         context = {'form': form,}
-    return render(request, 'cost_accounting.html', context)
+    return render(request, 'costs/cost_accounting.html', context)
 
 
 def cost_views(request, filter):
@@ -76,9 +74,39 @@ def profit(request):
 
 
 def earning(request):
-    form = CustomerForm()
-    context = {'form': form,}
+    if request.method == "POST":
+        form = SaleForm(request.POST)
+        context = {'form': form}
+        if form.is_valid():
+            form.save()
+    else:
+        form = SaleForm(request.POST)
+        context = {'form': form}
     return render(request, 'costs/earning.html', context)
+
+
+def orderer_info(request):
+    if request.method == "POST":
+        form = OrdererForm(request.POST)
+        context = {'form': form}
+        if form.is_valid():
+            form.save()
+    else:
+        form = OrdererForm(request.POST)
+        context = {'form': form}
+    return render(request, 'costs/orderer_info.html', context)
+
+
+def customer_info(request):
+    if request.method == "POST":
+        form = CustomerForm(request.POST)
+        context = {'form': form}
+        if form.is_valid():
+            form.save()
+    else:
+        form = CustomerForm(request.POST)
+        context = {'form': form}
+    return render(request, 'costs/customer_info.html', context)
 
 
 def earning_views(request, filter):

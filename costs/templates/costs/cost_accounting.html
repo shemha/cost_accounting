@@ -1,10 +1,31 @@
 {% extends 'costs/base.html' %}
 {% block content %}
 
-<form action="" method="POST">
-    {{ form.as_p }}
-    {% csrf_token %}
-    <button type="submit">送信</button>
+<form action="" method="POST">{% csrf_token %}
+    <h2>原価管理システム</h2>
+
+    <div>
+        <label>開始月</label>
+        {{ form.term_begin }}
+    </div>
+
+    <div>
+        <label>製品名</label>
+        {{ form.product }}
+    </div> 
+
+    <div>
+        <label>生産量</label>
+        {{ form.product_amount }}
+    </div>
+
+    <div>
+        <label>消費量</label>
+        {{ form.material_amount }}
+        <p>単位：</p>
+    </div>
+
+    <button type="submit">登録する</button>
 </form>
 
 {% endblock %}

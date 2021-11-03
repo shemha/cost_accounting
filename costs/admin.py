@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import *
+from .models import Vender, Material, Category, Item, Product, Cost, Warehousing, Stock, Customer, Orderer, Sale
 
 # Register your models here.
 class VenderAdmin(admin.ModelAdmin):
@@ -11,41 +11,46 @@ class MaterialAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'vender',)
     list_display_links = ('id', 'name',)
 
-    def vender_company(self, obj):
-        return obj.vender.company
-    vender_company.short_description = '仕入先'
-    vender_company.admin_order_field = 'vender'
-
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'name',)
     list_display_links = ('id', 'name',)
 
 
-class ProductAdmin(admin.ModelAdmin):
+class ItemAdmin(admin.ModelAdmin):
     list_display = ('id', 'name',)
     list_display_links = ('id', 'name',)
+
+
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ('id', 'item',)
+    list_display_links = ('id', 'item',)
 
 
 class CostAdmin(admin.ModelAdmin):
     list_display = ('id', 'product',)
     list_display_links = ('id',)
 
+
 class WarehousingAdmin(admin.ModelAdmin):
     list_display = ('id', 'material', 'date',)
     list_display_links = ('id', 'material', 'date',)
+
 
 class StockAdmin(admin.ModelAdmin):
     list_display = ('id', 'warehousing',)
     list_display_links = ('id',)
 
+
 class CustomerAdmin(admin.ModelAdmin):
     list_display = ('id', 'company',)
     list_display_links = ('id', 'company',)
 
+
 class OrdererAdmin(admin.ModelAdmin):
     list_display = ('id', 'company', 'name',)
     list_display_links = ('id', 'company', 'name',)
+
 
 class SaleAdmin(admin.ModelAdmin):
     list_display = ('id', 'customer', 'order_date',)
@@ -55,6 +60,7 @@ class SaleAdmin(admin.ModelAdmin):
 admin.site.register(Vender, VenderAdmin)
 admin.site.register(Material, MaterialAdmin)
 admin.site.register(Category, CategoryAdmin)
+admin.site.register(Item, ItemAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Cost, CostAdmin)
 admin.site.register(Warehousing, WarehousingAdmin)

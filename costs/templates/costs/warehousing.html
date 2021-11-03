@@ -2,10 +2,33 @@
 
 {% block content %}
 
-<form action="" method="POST">
-    {{ form.as_p }}
-    {% csrf_token %}
-    <button type="submit">送信</button>
+<form action="" method="POST">{% csrf_token %}
+    <div>
+        <h2>入庫管理システム</h2>
+    </div>
+
+    <div>
+        <label">入庫日</label>
+        {{ form.date }}
+    </div>
+
+    <div>
+        <label">材料名</label>
+        {{ form.material }}
+    </div>
+
+    <div>
+        <label>税抜価額</label>
+        {{ form.price }}
+    </div>
+
+    <div>
+        <label>数量</label>
+        {{ form.quantity }}
+        <p>単位：</p>
+    </div>
+    
+    <button type="submit">登録する</button>
 </form>
 
 {% endblock %}

@@ -23,19 +23,21 @@
                     
                     <div class="row">
                         {% if request.user.is_authenticated %}
-                        
+
                             <div class="col">
                                 <a href="{% url 'costs:warehousing' %}">入庫管理システム</a>
                             </div>
                             <div class="col">
                                 <a href="{% url 'costs:earning' %}">販売管理システム</a>
                             </div>
+
                             <div class="col">
                                 <a href="{% url 'costs:cost_accounting' %}">原価管理システム</a>
                             </div>
                             <div class="col">
                                 <a href="{% url 'costs:profit' %}">利益計算システム</a>
                             </div>
+
                             <div class="col">
                                 <a href="{% url 'costs:logout' %}">ログアウト</a>
                             </div>
@@ -47,9 +49,6 @@
             </div>
         </header>
         <div class="container">
-            {% for message in messages %}
-                <p class="message-{{ message.tags }}">{{ message }}</p>
-            {% endfor %}
             {% block content %}{% endblock %}
         </div>
         {% block js %}{% endblock %}

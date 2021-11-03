@@ -2,10 +2,10 @@
 
 {% block content %}
 
-<form action="" method="POST">
+<form action="" method="POST">{% csrf_token %}
     {{ form.as_p }}
-    {% csrf_token %}
-    <button type="submit">送信</button>
+    
+    <button type="submit">計算する</button>
 </form>
 
 {% endblock %}

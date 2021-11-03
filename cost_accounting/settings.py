@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django_bootstrap5',
     'pygments_renderer',
     'widget_tweaks',
+    'django.contrib.humanize',
     'users',
     'costs',
 ]

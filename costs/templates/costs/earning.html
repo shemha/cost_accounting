@@ -1,11 +1,55 @@
 {% extends 'costs/base.html' %}
 {% block content %}
 
-<form action="" method="POST">
-    {{ form.as_p }}
-    {% csrf_token %}
-    <button type="submit">送信</button>
+<form action="" method="POST">{% csrf_token %}
+    <div>
+        <label>注文日</label>
+        {{ form.order_date }}
+    </div>
+    <div>
+        <label>得意先名</label>
+        {{ form.customer }}
+    </div>
+    <div>
+        <label>注文商品</label>
+        {{ form.product }}
+    </div>
+    <div>
+        <label>販売単価</label>
+        {{ form.total_price }}
+    </div>
+    <div>
+        <label>税込価額</label>
+        {{ form.sales_tax }}
+    </div>
+    <div>
+        <label>1製品あたりの手数料</label>
+        {{ form.commission }}
+    </div>
+    <div>
+        <label>引き渡し方法</label>
+        {{ form.how_to_give }}
+    </div>
+    <div>
+        <label>引き渡し日</label>
+        {{ form.giving_date }}
+    </div>
+    <div>
+        <label>備考欄</label>
+        {{ form.note }}
+    </div>
+
+    <div>
+        <label>得意先情報登録</label>
+        {% include 'costs/customer_info.html' %}
+    </div>
+    
+    <div>
+        <label>注文者情報登録</label>
+        {% include 'costs/orderer_info.html' %}
+    </div>
+    
+    <input type="submit" value="登録">
 </form>
 
 {% endblock %}
-

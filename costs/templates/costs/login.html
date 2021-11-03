@@ -1,11 +1,20 @@
 {% extends 'costs/base.html' %}
 {% block content %}
 
-<form action="" method="POST">
-    {{ form.as_p }}
-    {% csrf_token %}
-    <button type="submit">送信</button>
+<form action="" method="POST">{% csrf_token %}
+    {% if form.errors %}
+        <p>ユーザー名かパスワードが間違っています。</p>
+    {% endif %}
+    <h2>ログイン</h2>
+    <label>メールアドレス</label>
+    <input name="username">
+    <br>
+    <label>パスワード</label>
+    <input type="password" name="password">
+    <br>
+    <input type="submit" value="ログイン">
 </form>
+<a href="{% url 'costs:signup' %}">新規登録へ</a>
 
 {% endblock %}
 

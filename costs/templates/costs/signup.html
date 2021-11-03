@@ -1,9 +1,15 @@
 {% extends 'costs/base.html' %}
 {% block content %}
 
-<form action="" method="POST">
-    {{ form.as_p }}
-    {% csrf_token %}
+<form action="" method="POST">{% csrf_token %}
+    {{ form.email }}
+    {{ form.email.errors }}
+
+    {{ form.password1 }}
+    {{ form.password1.errors }}
+    
+    {{ form.password2 }}
+    {{ form.password2.errors }}
     <button type="submit">送信</button>
 </form>
 
