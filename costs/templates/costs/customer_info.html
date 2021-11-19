@@ -1,0 +1,34 @@
+{% extends 'costs/base.html' %}
+{% block content %}
+
+<form action="" method="POST">{% csrf_token %}
+    <h2>新規得意先情報</h2>
+    <div>
+        <label>得意先名</label>
+        {{ form.company }}
+    </div>
+    <div>
+        <label>得意先郵便番号</label>
+        {{ form.post }}
+    </div>
+    <div>
+        <label>得意先住所</label>
+        {{ form.address }}
+    </div>
+    <div>
+        <label>得意先電話番号</label>
+        {{ form.tel }}
+    </div>
+    <div>
+        <label>得意先FAX番号</label>
+        {{ form.fax }}
+    </div>
+    <div>
+        <label>得意先メールアドレス</label>
+        {{ form.email }}
+    </div>
+
+    <input type="submit" value="登録">
+</form>
+
+{% endblock %}

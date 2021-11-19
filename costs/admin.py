@@ -23,8 +23,8 @@ class ItemAdmin(admin.ModelAdmin):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('id', 'item',)
-    list_display_links = ('id', 'item',)
+    list_display = ('id', 'item', 'amount', 'unit',)
+    list_display_links = ('id', 'item', 'amount', 'unit',)
 
 
 class CostAdmin(admin.ModelAdmin):

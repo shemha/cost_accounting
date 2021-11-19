@@ -1,5 +1,6 @@
-from django.forms import ModelForm, modelformset_factory
-from .models import *
+from django.forms import ModelForm, modelformset_factory, widgets
+from .models import Warehousing, Cost, Orderer, Customer, Product, Sale
+from django import forms
 
 
 class WarehousingForm(ModelForm):
@@ -7,25 +8,30 @@ class WarehousingForm(ModelForm):
         model = Warehousing
         fields = ['material', 'quantity', 'price', 'date']
 
+
 class CostForm(ModelForm):
     class Meta:
         model = Cost
         fields = [
+            'term_year',
+            'term_month',
             'product', 
             'product_amount',
             'material', 
             'material_amount',
             'work_in_process', 
             'defective', 
-            'term_begin', 
-            'term_end', 
             'cost_note',
         ]
+    
+    # term = forms.DateField(widget=forms.SelectDateWidget(years=[x for x in range(2000, 2100)]))
 
 
 class OrdererForm(ModelForm):
-    model = Orderer
-    fields = [
+    class Meta:
+        model = Orderer
+        fields = [
+            'company',
             'name',
             'tel',
             'email',
@@ -52,6 +58,7 @@ class SaleForm(ModelForm):
         model = Sale
         fields = [
                 'customer',
+                'orderer',
                 'order_date',
                 'product',
                 'settlement',
@@ -60,5 +67,18 @@ class SaleForm(ModelForm):
                 'commission',
                 'how_to_give',
                 'giving_date',
+                'post',
+                'address',
+                'note',
+            ]
+
+
+class ProductForm(ModelForm):
+    class Meta:
+        model = Product
+        fields = [
+                'item',
+                'unit',
+                'amount',
                 'note',
             ]

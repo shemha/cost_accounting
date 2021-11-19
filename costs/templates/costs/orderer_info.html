@@ -1,2 +1,31 @@
-{% csrf_token %}
-{{ form.as_p }}
+{% extends 'costs/base.html' %}
+{% block content %}
+
+<form action="" method="POST">{% csrf_token %}
+    <h2>新規発注者情報</h2>
+    <div>
+        <label>得意先名</label>
+        {{ form.company }}
+        <a href="{% url 'costs:customer_info' %}">得意先追加</a>
+    </div>
+    <div>
+        <label>担当者名</label>
+        {{ form.name }}
+    </div>
+    <div>
+        <label>担当者の電話番号</label>
+        {{ form.tel }}
+    </div>
+    <div>
+        <label>担当者のメールアドレス</label>
+        {{ form.email }}
+    </div>
+    <div>
+        <label>メモ</label>
+        {{ form.note }}
+    </div>
+
+    <input type="submit" value="登録">
+</form>
+
+{% endblock %}

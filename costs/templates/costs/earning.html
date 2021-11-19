@@ -2,51 +2,56 @@
 {% block content %}
 
 <form action="" method="POST">{% csrf_token %}
+    <h2>注文内容</h2>
     <div>
         <label>注文日</label>
-        {{ form.order_date }}
+        {{ form_sale.order_date }}
     </div>
     <div>
         <label>得意先名</label>
-        {{ form.customer }}
+        {{ form_sale.customer }}
+        <a href="{% url 'costs:customer_info' %}">得意先追加</a>
+    </div>
+    <div>
+        <label>発注者名</label>
+        {{ form_sale.orderer }}
+        <a href="{% url 'costs:orderer_info' %}">発注者追加</a>
     </div>
     <div>
         <label>注文商品</label>
-        {{ form.product }}
+        {{ form_sale.product }}
     </div>
     <div>
         <label>販売単価</label>
-        {{ form.total_price }}
+        {{ form_sale.total_price }}
     </div>
     <div>
         <label>税込価額</label>
-        {{ form.sales_tax }}
+        {{ form_sale.sales_tax }}
     </div>
     <div>
         <label>1製品あたりの手数料</label>
-        {{ form.commission }}
+        {{ form_sale.commission }}
     </div>
     <div>
         <label>引き渡し方法</label>
-        {{ form.how_to_give }}
+        {{ form_sale.how_to_give }}
     </div>
     <div>
         <label>引き渡し日</label>
-        {{ form.giving_date }}
+        {{ form_sale.giving_date }}
     </div>
     <div>
-        <label>備考欄</label>
-        {{ form.note }}
+        <label>発送先郵便番号</label>
+        {{ form_sale.post }}
     </div>
-
     <div>
-        <label>得意先情報登録</label>
-        {% include 'costs/customer_info.html' %}
+        <label>発送先住所</label>
+        {{ form_sale.address }}
     </div>
-    
     <div>
-        <label>注文者情報登録</label>
-        {% include 'costs/orderer_info.html' %}
+        <label>備考</label>
+        {{ form_sale.note }}
     </div>
     
     <input type="submit" value="登録">

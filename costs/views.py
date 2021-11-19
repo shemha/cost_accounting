@@ -1,15 +1,17 @@
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from users.forms import CustomUserCreationForm
 from .forms import *
 from .models import *
-from django.views.generic import ListView, View
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Count
+from django.views.generic import ListView
 
 
 # Create your views here.
-# def base_branch(request, pk):
-#     user = get_object_or_404(User, pk=pk)
-#     return render(request, 'app/base.html', {'user': user})
+def base_branch(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    return render(request, 'costs/base.html', {'user': user})
 
 
 def signup(request):
@@ -34,30 +36,30 @@ def signup(request):
 def warehousing(request):
     if request.method == "POST":
         form = WarehousingForm(request.POST)
-        context = {'form': form}
         if form.is_valid():
             form.save()
-    else:
-        form = WarehousingForm(request.POST)
-        context = {'form': form}
+    form = WarehousingForm()
+    context = {'form': form}
     return render(request, 'costs/warehousing.html', context)
 
 
-def warehousing_views(request, filter):
-    warehousing = Warehousing.objects.order_by(filter)
-    context = {'warehousing': warehousing}
-    return render(request, 'costs/warehousing_views.html', context)
+# class WarehousingListView(ListView):
+#     model = Warehousing
+#     context_object_name = 'warehousings'
+#     template_name = 'warehousing_view.html'
+
+def warehousing_view(request):
+    warehousings = Warehousing.objects.all()
+    return render(request, 'costs/warehousing_view.html', {'warehousings': warehousings})
 
 
 def cost_accounting(request):
     if request.method == "POST":
         form = CostForm(request.POST)
-        context = {'form': form,}
         if form.is_valid():
             form.save()
-    else:
-        form = CostForm(request.POST)
-        context = {'form': form,}
+    form = CostForm()
+    context = {'form': form}
     return render(request, 'costs/cost_accounting.html', context)
 
 
@@ -69,44 +71,40 @@ def cost_views(request, filter):
 
 def profit(request):
     form = CostForm()
-    context = {'form': form,}
+    context = {'form': form}
     return render(request, 'costs/profit.html', context)
 
 
 def earning(request):
     if request.method == "POST":
-        form = SaleForm(request.POST)
-        context = {'form': form}
-        if form.is_valid():
-            form.save()
-    else:
-        form = SaleForm(request.POST)
-        context = {'form': form}
+        form_sale = SaleForm(request.POST)
+        if form_sale.is_valid():
+            form_sale.save()
+    form_sale = SaleForm()
+    context = {'form_sale': form_sale,}
     return render(request, 'costs/earning.html', context)
-
-
-def orderer_info(request):
-    if request.method == "POST":
-        form = OrdererForm(request.POST)
-        context = {'form': form}
-        if form.is_valid():
-            form.save()
-    else:
-        form = OrdererForm(request.POST)
-        context = {'form': form}
-    return render(request, 'costs/orderer_info.html', context)
 
 
 def customer_info(request):
     if request.method == "POST":
         form = CustomerForm(request.POST)
-        context = {'form': form}
         if form.is_valid():
             form.save()
-    else:
-        form = CustomerForm(request.POST)
-        context = {'form': form}
+    form = CustomerForm()
+    context = {'form': form}
     return render(request, 'costs/customer_info.html', context)
+    # redirect('costs:earning')
+
+
+def orderer_info(request):
+    if request.method == "POST":
+        form = OrdererForm(request.POST)
+        if form.is_valid():
+            form.save()
+    form = OrdererForm()
+    context = {'form': form}
+    return render(request, 'costs/orderer_info.html', context)
+    # redirect('costs:earning')
 
 
 def earning_views(request, filter):

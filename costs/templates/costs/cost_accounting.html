@@ -1,12 +1,16 @@
 {% extends 'costs/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
 {% block content %}
 
 <form action="" method="POST">{% csrf_token %}
     <h2>原価管理システム</h2>
 
     <div>
+        <label>開始年度</label>
+        {{ form.term_year }}
         <label>開始月</label>
-        {{ form.term_begin }}
+        {{ form.term_month }}
     </div>
 
     <div>
@@ -14,6 +18,10 @@
         {{ form.product }}
     </div> 
 
+    <div>
+        <label>材料名</label>
+        {{ form.material }}
+    </div>
     <div>
         <label>生産量</label>
         {{ form.product_amount }}
@@ -28,4 +36,8 @@
     <button type="submit">登録する</button>
 </form>
 
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript" src="{% static 'js/calendar.js' %}"></script>
 {% endblock %}

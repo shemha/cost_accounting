@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MinLengthValidator, RegexValidator
-from common.reference import Division, Delivering, Unit, Settlement
+from common.reference import Division, Delivering, Unit, Settlement, Month
 
 # Create your models here.
 class Vender(models.Model):
@@ -56,7 +56,7 @@ class Vender(models.Model):
     note = models.TextField('備考', blank=True)
 
     def __str__(self):
-        return self.company
+        return self.name
 
 
 class Material(models.Model):
@@ -93,13 +93,12 @@ class Item(models.Model):
 class Product(models.Model):
     """販売製品"""
     item = models.ForeignKey(Item, verbose_name='品名', on_delete=models.PROTECT)
-    delivering = models.CharField('引渡し方法', max_length=2, choices=Delivering.choices)
     unit = models.CharField('単位', max_length=2, choices=Unit.choices)
     amount = models.PositiveIntegerField('セット数')
     note = models.TextField('備考', blank=True)
 
     def __str__(self):
-        return self.item
+        return self.item.name
 
 
 class Cost(models.Model):
@@ -108,26 +107,27 @@ class Cost(models.Model):
     product_amount = models.FloatField('生産量', validators=[MinValueValidator(0)], default=0)
     material = models.ForeignKey(Material, verbose_name='材料名', on_delete=models.PROTECT)
     material_amount = models.FloatField('消費量', validators=[MinValueValidator(0)], default=0)
-    work_in_process = models.FloatField('仕掛量', validators=[MinValueValidator(0)], default=0)
-    defective = models.FloatField('仕損じ量', validators=[MinValueValidator(0)], default=0)
-    term_begin = models.DateField('開始日', blank=True)
-    term_end = models.DateField('締め日', blank=True)
+    work_in_process = models.FloatField('仕掛量', validators=[MinValueValidator(0)], null=True, blank=True)
+    defective = models.FloatField('仕損じ量', validators=[MinValueValidator(0)], null=True, blank=True)
+    term_year = models.CharField('開始年度', max_length=4)
+    term_month = models.CharField('開始月', max_length=2, choices=Month.choices)
     cost_note = models.TextField('備考', blank=True)
 
     def __str__(self):
-        return self.product
+        return self.product.item.name
 
 
 class Warehousing(models.Model):
     """入庫マスタ"""
     material = models.ForeignKey(Material, verbose_name='材料名', on_delete=models.PROTECT)
-    cost = models.ForeignKey(Cost, verbose_name='原価', on_delete=models.PROTECT)
     date = models.DateField('入庫日')
     quantity = models.FloatField('数量', validators=[MinValueValidator(0)], default=0)
     price = models.FloatField('税抜価額', validators=[MinValueValidator(0)], default=0)
 
     def __str__(self):
-        return self.material
+        return self.material.name
+
+        # return str(self.material)
 
     # class Mata:
     #     db_table = 'warehousing'
@@ -138,9 +138,6 @@ class Stock(models.Model):
     warehousing = models.ForeignKey(Warehousing, verbose_name='材料名', on_delete=models.PROTECT)
     inventory = models.FloatField('仕入数量', validators=[MinValueValidator(0)], default=0)
     note = models.TextField('備考', blank=True)
-
-    def __str__(self):
-        return self.warehousing
 
 
 class Customer(models.Model):
@@ -205,7 +202,7 @@ class Orderer(models.Model):
     tel = models.CharField(
         '電話番号',
         blank=True,
-        max_length=10,
+        max_length=11,
         validators=[
             MinLengthValidator(10),
             RegexValidator(
@@ -227,12 +224,13 @@ class Orderer(models.Model):
     note = models.TextField('備考', blank=True)
 
     def __str__(self):
-        return self.company
+        return self.name
 
 
 class Sale(models.Model):
     """販売テーブル"""
     customer = models.ForeignKey(Customer, verbose_name='得意先', on_delete=models.PROTECT)
+    orderer = models.ForeignKey(Orderer, verbose_name='得意先', on_delete=models.PROTECT)
     order_date = models.DateField('注文日')
     product = models.ForeignKey(Product, verbose_name='製品名', on_delete=models.PROTECT)
     order_amount = models.PositiveIntegerField('注文数', default=0)
@@ -242,7 +240,20 @@ class Sale(models.Model):
     commission = models.PositiveIntegerField('1製品あたりの手数料')
     how_to_give = models.CharField('引き渡し方法', max_length=2, choices=Delivering.choices)
     giving_date = models.DateTimeField('引き渡し日')
+    post = models.CharField(
+        '郵便番号',
+        blank=True,
+        max_length=7,
+        validators=[
+            MinLengthValidator(7),
+            RegexValidator(
+                regex='^[0-9]+$',
+                message='７桁の数字を入力してください。'
+            )
+        ]
+    )
+    address = models.CharField('住所', max_length=100, blank=True)
     note = models.TextField('備考', blank=True)
     
     def __str__(self):
-        return self.customer
+        return self.order_date
